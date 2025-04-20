@@ -16,7 +16,6 @@ const ParallaxLayer: React.FC<ParallaxLayerProps> = ({ children, offset, speed, 
   // Calculate section boundaries
   const sectionStart = index * window.innerHeight;
   const sectionMiddle = sectionStart + (window.innerHeight / 2);
-  const sectionEnd = (index + 1) * window.innerHeight;
   
   useEffect(() => {
     // Calculate how far we are from the middle of this section (-1 to 1 range)

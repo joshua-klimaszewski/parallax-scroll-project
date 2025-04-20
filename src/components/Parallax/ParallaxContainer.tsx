@@ -8,17 +8,6 @@ interface ParallaxContainerProps {
 const ParallaxContainer: React.FC<ParallaxContainerProps> = ({ children }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Function to handle scrolling to specific sections
-  const scrollToSection = (index: number) => {
-    if (containerRef.current) {
-      const sectionHeight = window.innerHeight;
-      containerRef.current.scrollTo({
-        top: index * sectionHeight,
-        behavior: 'smooth'
-      });
-    }
-  };
-  
   return (
     <div 
       ref={containerRef}
