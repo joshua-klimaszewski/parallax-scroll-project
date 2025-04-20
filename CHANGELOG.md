@@ -1,5 +1,11 @@
 # parallax-scroll-project
 
+## 1.0.4
+
+### Patch Changes
+
+- Use SSH
+
 ## 1.0.2
 
 ### Patch Changes
