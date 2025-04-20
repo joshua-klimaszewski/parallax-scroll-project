@@ -1,19 +1,27 @@
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow: hidden; /* Changed from overflow-x to overflow to prevent body scrolling */
   background-color: #000; 
   font-family: "Helvetica Neue", Arial, sans-serif;
+  height: 100vh; /* Set fixed height */
+}
+
+html {
+  overflow: hidden; /* Prevent html scrolling */
 }
 
 .parallax-container {
   position: relative;
   width: 100%;
+  height: 100vh; /* Fixed height */
+  overflow-y: auto; /* Only this element should scroll */
   overflow-x: hidden;
   perspective: 2px;
   scroll-behavior: smooth;
   background-color: #000;
   color: #fff;
+  scroll-snap-type: y mandatory; /* Enable scroll snapping */
 }
 
 .parallax-layer {
@@ -23,7 +31,20 @@ body {
   background-size: cover;
   background-position: center;
   will-change: transform, opacity;
-  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  scroll-snap-align: center; /* Snap to the center */
+  scroll-snap-stop: always; /* Always stop at the snap point */
+}
+
+/* Content container for each section */
+.section-content {
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* Typography styles */

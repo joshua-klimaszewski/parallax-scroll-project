@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 interface ParallaxLayerProps {
   children: React.ReactNode;
@@ -8,53 +8,67 @@ interface ParallaxLayerProps {
 }
 
 const ParallaxLayer: React.FC<ParallaxLayerProps> = ({ children, offset, speed, index = 0 }) => {
+  const layerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   const [opacity, setOpacity] = useState(1);
-  const [skew, setSkew] = useState(0);
+  const [translateY, setTranslateY] = useState(0);
   
   // Calculate section boundaries
   const sectionStart = index * window.innerHeight;
+  const sectionMiddle = sectionStart + (window.innerHeight / 2);
   const sectionEnd = (index + 1) * window.innerHeight;
   
-  // Calculate scroll progress through this section (0 to 1)
-  const progressThroughSection = Math.max(0, Math.min(1, 
-    (offset - sectionStart) / (window.innerHeight * 0.5)
-  ));
-  
   useEffect(() => {
-    // Determine if we should show this section
-    const isSectionActive = offset >= sectionStart - window.innerHeight && 
-                           offset <= sectionEnd + window.innerHeight;
+    // Calculate how far we are from the middle of this section (-1 to 1 range)
+    // Where 0 means we're exactly at the middle
+    const distanceFromMiddle = (offset - sectionMiddle) / window.innerHeight;
     
-    // Calculate the morphing effects
-    // 1. Scale section from 1 down to 0.7 as you scroll past
-    const newScale = Math.max(0.7, 1 - (progressThroughSection * 0.3));
+    // Check if we're near this section
+    const isNearSection = Math.abs(distanceFromMiddle) < 1.5;
     
-    // 2. Fade out slightly as you scroll past
-    const newOpacity = Math.max(0.3, 1 - (progressThroughSection * 0.7));
-    
-    // 3. Add skew effect for more dramatic morphing
-    const newSkew = progressThroughSection * 3; // skew up to 3 degrees
-    
-    setScale(newScale);
-    setOpacity(newOpacity);
-    setSkew(newSkew);
-  }, [offset, index, progressThroughSection, sectionStart, sectionEnd]);
+    if (isNearSection) {
+      // Calculate effects based on distance from the middle
+      
+      // 1. Scale: from 0.7 when far to 1 when centered
+      const newScale = 0.8 + (1 - Math.min(1, Math.abs(distanceFromMiddle))) * 0.2;
+      
+      // 2. Opacity: full opacity when centered, fades as we scroll away
+      const newOpacity = 0.3 + (1 - Math.min(1, Math.abs(distanceFromMiddle) * 1.2)) * 0.7;
+      
+      // 3. Translate: create parallax effect
+      const newTranslateY = distanceFromMiddle * speed * window.innerHeight * -0.1;
+      
+      setScale(newScale);
+      setOpacity(newOpacity);
+      setTranslateY(newTranslateY);
+    }
+  }, [offset, speed, index, sectionMiddle]);
 
   const style = {
-    transform: `translateY(${offset * speed}px) scale(${scale}) skewY(${skew}deg)`,
     position: 'absolute' as const,
     width: '100%',
     height: '100vh',
     top: `${index * 100}vh`,
-    zIndex: 100 - index, // Higher layers have lower z-index
+    zIndex: 100 - index,
     opacity,
-    transition: 'transform 0.2s ease-out, opacity 0.2s ease-out',
-    willChange: 'transform, opacity',
+    transform: `translateY(${translateY}px) scale(${scale})`,
     transformOrigin: 'center center',
+    transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
+    willChange: 'transform, opacity',
+    scrollSnapAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    justifyContent: 'center' as const,
+    alignItems: 'center' as const,
   };
 
-  return <div style={style} className="parallax-layer">{children}</div>;
+  return (
+    <div ref={layerRef} style={style} className="parallax-layer">
+      <div className="section-content">
+        {children}
+      </div>
+    </div>
+  );
 };
 
 export default ParallaxLayer;
