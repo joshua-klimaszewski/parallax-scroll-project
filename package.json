@@ -1,6 +1,6 @@
 {
   "name": "parallax-scroll-project",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A React project implementing a parallax scrolling effect.",
   "type": "module",
   "scripts": {
