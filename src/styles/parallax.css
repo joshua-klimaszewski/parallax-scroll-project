@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #000; 
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.parallax-container {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  perspective: 2px;
+  scroll-behavior: smooth;
+  background-color: #000;
+  color: #fff;
+}
+
+.parallax-layer {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  will-change: transform, opacity;
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Typography styles */
+h1, h2, h3 {
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  margin: 0;
+  line-height: 0.85;
+  
+  /* Add distortion effects */
+  transform-origin: center center;
+  transition: all 0.3s ease-out;
+  
+  /* Add clipping effect similar to reference */
+  clip-path: polygon(
+    0 0, 100% 0, 100% 85%, 98% 85%, 98% 95%, 100% 95%, 
+    100% 100%, 0 100%, 0 15%, 2% 15%, 2% 5%, 0 5%
+  );
+}
+
+/* Add hover effects for interactive feel */
+.parallax-layer:hover h1,
+.parallax-layer:hover h2 {
+  letter-spacing: -0.01em;
+  transform: scale(1.02);
+  transition: all 0.3s ease-out;
+}
+
+/* Add glitch animation for text when scrolling */
+@keyframes textGlitch {
+  0% { clip-path: inset(40% 0 61% 0); }
+  20% { clip-path: inset(92% 0 1% 0); }
+  40% { clip-path: inset(43% 0 1% 0); }
+  60% { clip-path: inset(25% 0 58% 0); }
+  80% { clip-path: inset(54% 0 7% 0); }
+  100% { clip-path: inset(58% 0 43% 0); }
+}
+
+/* Add scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;
+}
