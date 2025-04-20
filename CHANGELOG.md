@@ -1,5 +1,11 @@
 # parallax-scroll-project
 
+## 1.0.5
+
+### Patch Changes
+
+- Fix package.json
+
 ## 1.0.4
 
 ### Patch Changes

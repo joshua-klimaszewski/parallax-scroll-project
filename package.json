@@ -1,6 +1,6 @@
 {
   "name": "parallax-scroll-project",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A React project implementing a parallax scrolling effect.",
   "type": "module",
   "scripts": {
@@ -38,13 +38,13 @@
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   },
-  "homepage": "https://github.com/joshua-klimaszewski/parallax-scroll-project#readme",
+  "homepage": "git+ssh://git@github.com/joshua-klimaszewski/parallax-scroll-project#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshua-klimaszewski/parallax-scroll-project.git"
+    "url": "git+ssh://git@github.com/joshua-klimaszewski/parallax-scroll-project.git"
   },
   "bugs": {
-    "url": "https://github.com/joshua-klimaszewski/parallax-scroll-project/issues"
+    "url": "git+ssh://git@github.com/joshua-klimaszewski/parallax-scroll-project/issues"
   },
   "engines": {
     "node": ">=14.0.0"
